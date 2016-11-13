@@ -38,7 +38,7 @@ if(cluster.isMaster) {
     app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
     var server = app.listen(port, function() {
-        console.log('Process ' + process.pid + ' is listening to all incoming requests');
+        console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
     });
     var compiler = webpack(config);
     app.use(require('webpack-hot-middleware')(compiler, {
