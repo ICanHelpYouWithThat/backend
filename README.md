@@ -26,6 +26,10 @@ App is now running on port 3000
 
 #### Mocha for testing.
 
+        npm test
+           or
+        npm test ${DIR|FILE}
+
 ###### *Mocha Docs*
 https://mochajs.org/
 
