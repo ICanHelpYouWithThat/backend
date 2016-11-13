@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ICanHelpYouWithThat/backend.svg?branch=master)](https://travis-ci.org/ICanHelpYouWithThat/frontend)
+[![Build Status](https://travis-ci.org/ICanHelpYouWithThat/backend.svg?branch=master)](https://travis-ci.org/ICanHelpYouWithThat/backend)
 
 ### What we are...
 A simple site which allows people who are logged in through Facebook to find tasks that help out an organization who needs a skill they can offer - location/time constraints are matching.
@@ -31,8 +31,7 @@ https://mochajs.org/
 https://expressjs.com/
 
 ###### *Node 7 Docs*
-https://nodejs.org/en/docs/
-
+https://nodejs.org/dist/latest-v7.x/docs/api/
 
 HTML - JavaScript - Simple UI - Angular2 with WebPack front-end
 Simple Services which will read, update, create data about the individual user, organization, event
