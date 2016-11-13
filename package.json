@@ -1,5 +1,5 @@
 {
-  "name": "ichywt-frontend",
+  "name": "ichywt-backend",
   "description": "Simple site which allows people who are logged in through Facebook to find tasks that help out an organization who needs a skill they can offer - location/time constraints are matching.",
   "version": "0.0.0",
   "author": "Thiyag Krishna",
@@ -23,8 +23,10 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "babel-register": "^6.18.0",
+    "body-parser": "^1.15.2",
     "es6-module-loader": "^0.17.11",
     "express": "^4.14.0",
+    "helmet": "^3.1.0",
     "http": "0.0.0",
     "jsonwebtoken": "^7.1.9",
     "mocha": "^3.1.2",

@@ -35,20 +35,30 @@ if(cluster.isMaster) {
     });
 } else {
     var app = express();
+
+    //helmet helps secure apps by setting appropriate headers
+    var helmet = require('helmet');
+    app.use(helmet());
+
+    var bodyParser = require('body-parser');
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    var apiRouter = express.Router();
+    apiRouter.get('/', function(req, res) {
+      res.json({ message: 'hooray! welcome to our api!' });
+    });
+
+    app.use('/api', apiRouter);
+
     app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
     var server = app.listen(port, function() {
         console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
     });
+
     var compiler = webpack(config);
     app.use(require('webpack-hot-middleware')(compiler, {
         log: console.log
     }));
 }
-
-
-
-
-
-
-
