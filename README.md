@@ -9,6 +9,9 @@ Organization User Create events that require skills at a location for a certain 
 
 Simple UI with a few screens that have simple forms to enter in data
 
+###### *Angular 2 Frontend*
+https://github.com/ICanHelpYouWithThat/frontend
+
 ###  Dev Setup
 1) Clone the repo
         
