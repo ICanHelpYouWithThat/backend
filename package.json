@@ -1,0 +1,45 @@
+{
+  "name": "ichywt-frontend",
+  "description": "Simple site which allows people who are logged in through Facebook to find tasks that help out an organization who needs a skill they can offer - location/time constraints are matching.",
+  "version": "0.0.0",
+  "author": "Thiyag Krishna",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ICanHelpYouWithThat/backend.git"
+  },
+  "keywords": [
+    "ichywt"
+  ],
+  "bugs": {
+    "url": "https://github.com/ICanHelpYouWithThat/backend/issues"
+  },
+  "scripts": {
+    "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
+    "test": "node .scripts/test.js"
+  },
+  "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "es6-module-loader": "^0.17.11",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "jsonwebtoken": "^7.1.9",
+    "node-uuid": "^1.4.7",
+    "nodemon": "^1.11.0",
+    "piping": "^1.0.0-rc.4",
+    "traceur": "0.0.111",
+    "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.1",
+    "webpack-middleware-hmr": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "webpack-node-externals": "^1.5.4"
+  }
+}

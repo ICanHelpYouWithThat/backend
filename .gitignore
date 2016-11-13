@@ -1,0 +1,25 @@
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled app
+dist
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+build
+=======
+.idea
+.happypack
+node_modules
+
