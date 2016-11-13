@@ -12,21 +12,26 @@ Simple UI with a few screens that have simple forms to enter in data
 ###  Dev Setup
 1) Clone the repo
         
-        git clone https://github.com/ICanHelpYouWithThat/frontend.git
-        cd ./frontend
+        git clone https://github.com/ICanHelpYouWithThat/backend.git
+        cd ./backend
 
-2) install node modules
-
-        npm install
-
-3) Start the app
+2) Start project
 
         npm start
 
 App is now running on port 3000
 
+#### Mocha for testing.
+
+###### *Mocha Docs*
+https://mochajs.org/
 
 
+###### *Express Docs*
+https://expressjs.com/
+
+###### *Node 7 Docs*
+https://nodejs.org/en/docs/
 
 
 HTML - JavaScript - Simple UI - Angular2 with WebPack front-end
