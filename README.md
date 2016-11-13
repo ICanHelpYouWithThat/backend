@@ -33,11 +33,3 @@ https://expressjs.com/
 ###### *Node 7 Docs*
 https://nodejs.org/dist/latest-v7.x/docs/api/
 
-HTML - JavaScript - Simple UI - Angular2 with WebPack front-end
-Simple Services which will read, update, create data about the individual user, organization, event
-
-NodeJS w/ Express 4.x
-Simple Datastore which will store user info, organization info, event info which requires skill and relationship between user and event skills.
-
-MySQL DB
-Location Google Apps
