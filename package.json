@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
-    "test": "node .scripts/test.js"
+    "test": " ./node_modules/.bin/mocha"
   },
   "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
   "dependencies": {
@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "http": "0.0.0",
     "jsonwebtoken": "^7.1.9",
+    "mocha": "^3.1.2",
     "node-uuid": "^1.4.7",
     "nodemon": "^1.11.0",
     "piping": "^1.0.0-rc.4",
