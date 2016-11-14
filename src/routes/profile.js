@@ -7,7 +7,7 @@ export default () => {
     /**
      * Route for creating a profile
      * The empty string is because this is the base route for this set of routes
-     * ex api/profile
+     * ex profile
      */
     router.route("")
         .post((req, res, next) => {
@@ -29,6 +29,6 @@ export default () => {
     //
     // });
 
-    // so here we define all routes in the routing file to b root api/profile
+    // so here we define all routes in the routing file to b root profile
     return router.use("/profile", router);
 }

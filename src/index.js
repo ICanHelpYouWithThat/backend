@@ -44,7 +44,7 @@ if(cluster.isMaster) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    app.use('/api', require('./routes').default);
+    app.use(require('./routes').default);
 
     // app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
