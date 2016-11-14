@@ -33,9 +33,11 @@ App is now running on port 3000
 ###### *Mocha Docs*
 https://mochajs.org/
 
-
 ###### *Express Docs*
 https://expressjs.com/
+
+###### *Sequelize for json 
+http://docs.sequelizejs.com/en/v3/
 
 ###### *Node 7 Docs*
 https://nodejs.org/dist/latest-v7.x/docs/api/

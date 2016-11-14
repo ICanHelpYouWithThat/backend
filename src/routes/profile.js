@@ -12,10 +12,12 @@ export default () => {
      */
     router.route("")
         .post((req, res, next) => {
-            console.log(req)
+            console.log(req);
         })
         .get((req, res, next) => {
             console.log(req);
+            // just adding a response so i can test
+            res.send(req.body).end();
         })
         .delete((req, res, next) => {
 
