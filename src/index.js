@@ -44,14 +44,9 @@ if(cluster.isMaster) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    var apiRouter = express.Router();
-    apiRouter.get('/', function(req, res) {
-      res.json({ message: 'hooray! welcome to our api!' });
-    });
+    app.use('/api', require('./routes').default);
 
-    app.use('/api', apiRouter);
-
-    app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
+    // app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
     var server = app.listen(port, function() {
         console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
