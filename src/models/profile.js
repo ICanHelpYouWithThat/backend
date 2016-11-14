@@ -59,20 +59,17 @@ var Profile = sequelize.define('PROFILE', {
         type: "TINYINT"
     }
 }, {
-    freezeTableName: true // Model tableName will be the same as the model name
+
+    // These are class methods.
+    classMethods: {
+        createUsers: (arrayOfUserData) => {
+            // Create your batch users...
+        }
+    },
+    // These are instance methods done on the proto
+    instanceMethods: {
+        incrementLike: () => {
+            this.like++;
+        }
+    }
 });
-
-// These are class methods.
-Profile.create = (name, email) => (
-    // Everything is a promise just return it.
-    Profile.build({name: name, email: email}).save()
-    // or maybe we increment liek 2
-    // Profile.build({name: name, email: email}).incrementLike().save()
-);
-
-// These are instance methods done on the proto
-Profile.prototype.incrementLike = () => {
-    this.like++;
-};
-
-export default Profile;

@@ -4,7 +4,6 @@ import webpack from 'webpack';
 import os from 'os';
 import cluster from 'cluster';
 
-require('./config/config.js').default();
 
 var config = require('../webpack/webpack.config.js');
 
