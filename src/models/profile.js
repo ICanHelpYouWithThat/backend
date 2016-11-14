@@ -73,3 +73,5 @@ var Profile = sequelize.define('PROFILE', {
         }
     }
 });
+
+export default Profile;
