@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import Profile from '../models/profile'
 
 const router = express.Router();
-// Todo: Define secret sauce
+// Todo: Better handle JWT key
 const secret = fs.readFileSync('jwt.key');  // get jwt secret key
 const saltRounds = 6;
 
