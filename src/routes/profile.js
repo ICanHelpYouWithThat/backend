@@ -1,16 +1,20 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import Profile from '../models/profile'
 
 const router = express.Router();
 // Todo: Define secret sauce
-const secret = process.env.JWT_SECRET || 'secret sauce';
+const secret = fs.readFileSync('jwt.key');  // get jwt secret key
 const saltRounds = 6;
 
 function generateWebToken(user) {
-    return jwt.sign({data: user}, secret, {
-        expiresIn: 86400
+    return jwt.sign({
+        iss: 'https://icanhelpyouwiththat.org',
+        sub: user.id
+    }, secret, {
+        expiresIn: '24h'
     })
 }
 
@@ -26,33 +30,45 @@ export default () => {
             // POST
         })
         .get((req, res, next) => {
-            Profile.findOne({
-                where: {
-                    id: req.body.profileid
-                }
-            }).then(profile => {
-                let status,
-                    message;
+            jwt.verify(
+                req.get('Authorization'),
+                secret,
+                {issuer: 'https://icanhelpyouwiththat.org'},
+                (err, decoded) => {
+                    if (err) {
+                        res.send({
+                            status: '0401',
+                            message: 'Not Authorized',
+                            error: err
+                        })
+                    } else {
+                        Profile.findById(req.body.profileid, {attributes: {
+                            exclude: ['password']
+                        }}).then(profile => {
+                            let status,
+                                message;
 
-                if (profile) {
-                    status = '0000';
-                    message = 'Profile found'
-                } else {
-                    status = '0404';
-                    message = 'Profile not found'
-                }
+                            if (profile) {
+                                status = '0000';
+                                message = 'Profile found'
+                            } else {
+                                status = '0404';
+                                message = 'Profile not found'
+                            }
 
-                res.send({
-                    status: status,
-                    message: message,
-                    profile: profile
+                            res.send({
+                                status: status,
+                                message: message,
+                                profile: profile
+                            });
+                        }).catch(() => {
+                            res.send({
+                                status: '0500',
+                                message: 'Unknown error occured'
+                            })
+                        })
+                    }
                 });
-            }).catch(() => {
-                res.send({
-                    status: '0500',
-                    message: 'Unknown error occured'
-                })
-            })
         })
         .delete((req, res, next) => {
             // DELETE
@@ -97,23 +113,25 @@ export default () => {
      */
     router.route("/create")
         .post((req, res, next) => {
-            Profile.sync()
-                .then(() => {
-                    return Profile.create({
+            Profile.create({
                         name: req.body.name,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, saltRounds)
-                    })
+            }).then(profile => {
+                res.send({
+                    status: '0000',
+                    message: 'New profile created'
                 })
-                .catch((err) => {
+            }).catch((err) => {
                     res.send({
                         status: '0500',
-                        message: err.errors[0].message
+                        message: err
                     })
                 });
-            res.send({
-                status: '0000',
-                message: `${req.body.name} was successfully created`
+        })
+        .get((req, res, next) => {
+            Profile.findAll().then((profiles) => {
+                res.send(profiles)
             })
         });
 
