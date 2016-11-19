@@ -14,7 +14,7 @@ CREATE TABLE PROFILE (
     admin TINYINT,
     likes INT,
     invites INT,
-    password VARCHAR(50),
+    password VARCHAR(60),
     linked_acct VARCHAR(500),
     status TINYINT,
     PRIMARY KEY(ID)

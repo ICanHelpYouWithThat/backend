@@ -13,50 +13,69 @@ var Profile = sequelize.define('PROFILE', {
     },
     name: {
         type: Sequelize.STRING(150),
-        field: 'name'
+        field: 'name',
+        allowNull: false
     },
     karmaPoints: {
         type: Sequelize.INTEGER,
-        field: 'karma_points'
+        field: 'karma_points',
+        allowNull: true
     },
     email: {
-        type: Sequelize.STRING(150)
+        type: Sequelize.STRING(150),
+        unique: true,
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
     },
     mobilePhone: {
         type: Sequelize.STRING(25),
-        field: 'mobile_phone'
+        field: 'mobile_phone',
+        allowNull: true
     },
     location: {
         type: Sequelize.STRING(25),
-        field: 'geo_location'
+        field: 'geo_location',
+        allowNull: true
     },
     zip: {
         type: Sequelize.STRING(15),
-        field: 'zip_code'
+        field: 'zip_code',
+        allowNull: true
     },
     type: {
-        type: 'TINYINT'
+        type: 'TINYINT',
+        allowNull: true
     },
     mission: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: true
     },
     admin: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     },
     likes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true
     },
     invites: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true
     },
     password: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(60),
+        allowNull: false
     },
     linkedAccount: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: true
     },
     status: {
-        type: "TINYINT"
+        type: "TINYINT",
+        allowNull: true
     }
 }, {
 
