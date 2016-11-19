@@ -182,10 +182,6 @@ export default () => {
                 })
             })
         })
-        .get((req, res, next) => {
-            Profile.findAll({where: {name: 'ddiefenderfer'}})
-                .then(user => res.send(user))
-        })
 
     // Or routes can b created this way.  Using .get .post .put .delete
     // right on router.
