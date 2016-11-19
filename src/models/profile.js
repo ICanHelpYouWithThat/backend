@@ -7,9 +7,7 @@ var Profile = sequelize.define('PROFILE', {
         autoIncrement: true,
         field: 'ID',
         primaryKey: true,
-        validate: {
-            notNull: true
-        }
+        allowNull: false
     },
     name: {
         type: Sequelize.STRING(150),
