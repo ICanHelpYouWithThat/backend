@@ -4,8 +4,15 @@ import jwt from 'jsonwebtoken';
 import Profile from '../models/profile'
 
 const router = express.Router();
+// Todo: Define secret sauce
 const secret = process.env.JWT_SECRET || 'secret sauce';
 const saltRounds = 6;
+
+function generateWebToken(user) {
+    return jwt.sign({data: user}, secret, {
+        expiresIn: 86400
+    })
+}
 
 export default () => {
 
@@ -67,16 +74,14 @@ export default () => {
                 if (!bcrypt.compareSync(req.body.password, user.password)) {
                     res.send({
                         status: '0500',
-                        message: 'Invalid password'
+                        message: 'Username and Password do not match'
                     })
                 }
 
                 res.send({
                     status: '0000',
                     message: 'Authentication successful',
-                    token: jwt.sign({data: user}, secret, {
-                        expiresIn: 86400
-                    })
+                    token: generateWebToken(user)
                 })
             }).catch(err => {
                 res.send({
