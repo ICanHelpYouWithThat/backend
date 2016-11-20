@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/ICanHelpYouWithThat/backend.svg?branch=master)](https://travis-ci.org/ICanHelpYouWithThat/backend)
 
+[![Stories in Ready](https://badge.waffle.io/ICanHelpYouWithThat/backend.png?label=ready&title=Ready)](http://waffle.io/ICanHelpYouWithThat/backend)
+
 ### What we are...
 A simple site which allows people who are logged in through Facebook to find tasks that help out an organization who needs a skill they can offer - location/time constraints are matching.
 
