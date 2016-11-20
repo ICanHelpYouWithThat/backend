@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: production-ingress
+spec:
+  backend:
+    serviceName: backend
+    servicePort: 80
+  rules:
+  - host: icanhelpyouwiththat.org
+    http:
+      paths:
+      - backend:
+          serviceName: api
+          servicePort: 80
