@@ -9,6 +9,11 @@ const router = express.Router();
 const secret = fs.readFileSync('jwt.key');  // get jwt secret key
 const saltRounds = 6;
 
+/**
+ * Helper function, generates webtoken
+ * @param user
+ * @returns {*}
+ */
 function generateWebToken(user) {
     return jwt.sign({
         iss: 'https://icanhelpyouwiththat.org',
@@ -19,7 +24,7 @@ function generateWebToken(user) {
 }
 
 /**
- * Helper function,
+ * Helper function, verifies token
  * @param token
  * @param successCallBack
  * @param errorCallBack
@@ -87,8 +92,6 @@ export default () => {
         .delete((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
-                    console.log('Decoded: ' + decoded.sub);
-                    console.log('Body: ' + req.body.profileid);
                     if (decoded.sub != req.body.profileid) {
                         res.status(401).send({
                             status: '0401',
