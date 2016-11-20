@@ -23,6 +23,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "babel-register": "^6.18.0",
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "es6-module-loader": "^0.17.11",
     "express": "^4.14.0",

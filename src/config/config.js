@@ -20,7 +20,7 @@ export {sequelizeInstance as sequelize, Sequelize as Sequelize};
 function getDatabaseInstance () {
     return !!sequelizeInstance ? sequelizeInstance : (() => {
         console.log("Initializing ichuwt mysql...");
-        return sequelizeInstance = new Sequelize('ichuwt', 'root', {
+        return sequelizeInstance = new Sequelize('ichuwt', 'root', '',{
             host: 'localhost',
             dialect: 'mysql'
         });
