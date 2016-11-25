@@ -61,11 +61,12 @@ export default () => {
                     message: err
                 })
             });
-        })
-        .get((req, res, next) => {
+        });
+
+    router.route("/:id").get((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack()  {
-                    Profile.findById(req.param.id, {
+                    Profile.findById(req.params.id, {
                         attributes: {exclude: ['password']}
                     }).then(profile => {
                         res.status(profile ? 200 : 404).send({
@@ -92,13 +93,13 @@ export default () => {
         .delete((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
-                    if (decoded.sub != req.param.id) {
+                    if (decoded.sub != req.params.id) {
                         res.status(401).send({
                             status: '0401',
                             message: 'Not authorized'
                         });
                     } else {
-                        Profile.findById(req.param.id)
+                        Profile.findById(req.params.id)
                             .then(user => {
                                 user.destroy({force: true});
                             });
@@ -120,13 +121,13 @@ export default () => {
         .put((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
-                    if (decoded.sub != req.body.id) {
+                    if (decoded.sub != req.params.id) {
                         res.status(401).send({
                             status: '0401',
                             message: 'Not authorized'
                         });
                     } else {
-                        Profile.findById(req.body.id)
+                        Profile.findById(req.params.id)
                             .then(user => {
                                 let keys = Object.keys(req.body);
                                 keys.forEach(key => {
