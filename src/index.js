@@ -47,6 +47,11 @@ if(cluster.isMaster) {
 
     app.use(require('./routes').default);
 
+    app.use(function(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+        return next();
+    });
+
     // app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
     var server = app.listen(port, function() {
