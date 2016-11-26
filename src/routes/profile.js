@@ -65,8 +65,10 @@ export default () => {
 
     router.route("/:id").get((req, res, next) => {
             verifyToken(req.get('Authorization'),
-                function successCallBack()  {
-                    Profile.findById(req.params.id, {
+                function successCallBack(decoded)  {
+                    let id = Number.isInteger(Number.parseInt(req.params.id)) ? req.params.id : decoded.sub;
+
+                    Profile.findById(id, {
                         attributes: {exclude: ['password']}
                     }).then(profile => {
                         res.status(profile ? 200 : 404).send({
