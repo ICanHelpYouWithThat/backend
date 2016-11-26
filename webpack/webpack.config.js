@@ -12,6 +12,7 @@ fs.readdirSync('node_modules')
         nodeModules[mod] = 'commonjs ' + mod;
     });
 
+console.log(process.env.NODE_ENV);
 module.exports = {
     entry: (
         process.env.NODE_ENV === 'production' ? {

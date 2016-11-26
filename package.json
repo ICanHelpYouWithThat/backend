@@ -18,8 +18,8 @@
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
     "test": "./node_modules/.bin/mocha",
     "init_db": "./scripts/init_db.sh",
-    "build": "webpack -p --config ./webpack/webpack.config.js",
-    "deploy": "npm prune && npm install &&  NODE_ENV=production && node ./build/backend.js"
+    "build": "cross-env NODE_ENV=production webpack -p --config ./webpack/webpack.config.js",
+    "deploy": "npm prune && npm install && cross-env NODE_ENV=production && node ./build/backend.js"
   },
   "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
   "dependencies": {
@@ -27,6 +27,7 @@
     "babel-register": "^6.18.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "cross-env": "^3.1.3",
     "es6-module-loader": "^0.17.11",
     "express": "^4.14.0",
     "helmet": "^3.1.0",
