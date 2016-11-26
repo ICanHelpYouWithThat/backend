@@ -13,16 +13,18 @@ fs.readdirSync('node_modules')
     });
 
 console.log(process.env.NODE_ENV);
+const prod = process.env.NODE_ENV === 'production';
+
 module.exports = {
     entry: (
-        process.env.NODE_ENV === 'production' ? {
+        !prod ? {
             app: [
                 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
                 './src/bootstrap.js'
             ]} : {
             app: [
                 './src/bootstrap.js'
-            ]
+            ].concat(Object.keys(nodeExternals()))
         }
     ),
     target: 'node',
@@ -39,14 +41,17 @@ module.exports = {
                 query: {
                     presets: ['es2015']
                 },
-                exclude: /node_modules/
+                exclude:
+                    (prod ? /node_modules/ : undefined)
+
             }
         ]
     },
-    plugins: [(
-            process.env.NODE_ENV !== 'production' ? new webpack.HotModuleReplacementPlugin() : undefined
-        ),
+    plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            '__PRODUCTION__': prod
+        })
     ]
-};
+}

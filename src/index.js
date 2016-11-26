@@ -17,7 +17,7 @@ config.plugins.unshift(
 
 if(cluster.isMaster) {
     // Workers always n-1
-    let numWorkers = os.cpus().length - 1;
+    let numWorkers = 1;
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
@@ -37,7 +37,6 @@ if(cluster.isMaster) {
 } else {
     let app = express();
 
-    console.log(process.env.NODE_ENV);
     //helmet helps secure apps by setting appropriate headers
     let helmet = require('helmet');
     app.use(helmet());

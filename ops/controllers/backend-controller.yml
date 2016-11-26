@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  generateName: backend-master-
+  labels:
+    name: backend
+    version: v0.0.0
+spec:
+  replicas: 1
+  selector:
+    name: backend
+    version: v0.0.0
+  template:
+    metadata:
+      labels:
+        name: backend
+        version: v0.0.0
+    spec:
+      containers:
+        - name: backend
+          image: us.gcr.io/icanhelpyouwiththat-149304/backend:latest
+          env:
+          - name: NODE_ENV
+            value: production
+          ports:
+            - containerPort: 3000
+              name: http
