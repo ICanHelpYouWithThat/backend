@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV;
 var sequelizeInstance;
 
 getDatabaseInstance();
-
+console.log(process.env);
 export default () => (
     !env || env === 'development' ? (() => ({
         db: getDatabaseInstance()
@@ -20,8 +20,8 @@ export {sequelizeInstance as sequelize, Sequelize as Sequelize};
 function getDatabaseInstance () {
     return !!sequelizeInstance ? sequelizeInstance : (() => {
         console.log("Initializing ichuwt mysql...");
-        return sequelizeInstance = new Sequelize('ichuwt', 'root', '',{
-            host: 'localhost',
+        return sequelizeInstance = new Sequelize('ichuwt', 'root', 'medco123',{
+            host: '104.197.138.145',
             dialect: 'mysql'
         });
     })()

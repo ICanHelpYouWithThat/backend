@@ -47,10 +47,5 @@ module.exports = {
         ),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({
-            '__CLIENT__': true,
-            '__PRODUCTION__': false,
-            'process.env.NODE_ENV': JSON.stringify('development')
-        }),
     ]
-}
+};
