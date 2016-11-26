@@ -47,19 +47,27 @@ if(cluster.isMaster) {
 
     app.use(require('./routes').default);
 
-    app.use(function(req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-        return next();
-    });
-
     // app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
     let server = app.listen(port, function() {
         console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
     });
 
-    let compiler = webpack(config);
-    app.use(require('webpack-hot-middleware')(compiler, {
-        log: console.log
-    }));
+    if (process.env.NODE_ENV === 'production') {
+        app.use(function(req, res, next) {
+            res.setHeader('Access-Control-Allow-Origin', '*.icanhelpyouwiththat.org');
+            return next();
+        });
+    } else {
+        let compiler = webpack(config);
+
+        app.use(function(req, res, next) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            return next();
+        });
+
+        app.use(require('webpack-hot-middleware')(compiler, {
+            log: console.log
+        }));
+    }
 }

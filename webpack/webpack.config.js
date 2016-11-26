@@ -13,12 +13,17 @@ fs.readdirSync('node_modules')
     });
 
 module.exports = {
-    entry: {
-        app: [
-            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-            './src/bootstrap.js'
-        ]
-    },
+    entry: (
+        process.env.NODE_ENV === 'production' ? {
+            app: [
+                'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+                './src/bootstrap.js'
+            ]} : {
+            app: [
+                './src/bootstrap.js'
+            ]
+        }
+    ),
     target: 'node',
     output: {
         path: path.join(__dirname, '../build'),
@@ -37,8 +42,9 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+    plugins: [(
+            process.env.NODE_ENV !== 'production' ? new webpack.HotModuleReplacementPlugin() : undefined
+        ),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({

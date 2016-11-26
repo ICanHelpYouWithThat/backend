@@ -17,7 +17,8 @@
   "scripts": {
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
     "test": "./node_modules/.bin/mocha",
-    "init_db": "./scripts/init_db.sh"
+    "init_db": "./scripts/init_db.sh",
+    "deploy": "npm install && webpack "
   },
   "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
   "dependencies": {
