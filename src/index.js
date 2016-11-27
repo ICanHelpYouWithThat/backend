@@ -5,7 +5,7 @@ import os from 'os';
 import cluster from 'cluster';
 
 
-var config = require('../webpack/webpack.config.js');
+const config = require('../webpack/webpack.config.js');
 
 const port = 3000;
 
@@ -17,11 +17,11 @@ config.plugins.unshift(
 
 if(cluster.isMaster) {
     // Workers always n-1
-    var numWorkers = os.cpus().length - 1;
+    let numWorkers = 1;
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
-    for(var i = 0; i < numWorkers; i++) {
+    for(let i = 0; i < numWorkers; i++) {
         cluster.fork();
     }
 
@@ -35,13 +35,13 @@ if(cluster.isMaster) {
         cluster.fork();
     });
 } else {
-    var app = express();
+    let app = express();
 
     //helmet helps secure apps by setting appropriate headers
-    var helmet = require('helmet');
+    let helmet = require('helmet');
     app.use(helmet());
 
-    var bodyParser = require('body-parser');
+    let bodyParser = require('body-parser');
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
@@ -49,12 +49,25 @@ if(cluster.isMaster) {
 
     // app.all('/*', function(req, res) {res.send('process ' + process.pid + ' says hello!').end();})
 
-    var server = app.listen(port, function() {
+    let server = app.listen(port, function() {
         console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
     });
 
-    var compiler = webpack(config);
-    app.use(require('webpack-hot-middleware')(compiler, {
-        log: console.log
-    }));
+    if (process.env.NODE_ENV === 'production') {
+        app.use(function(req, res, next) {
+            res.setHeader('Access-Control-Allow-Origin', '*.icanhelpyouwiththat.org');
+            return next();
+        });
+    } else {
+        let compiler = webpack(config);
+
+        app.use(function(req, res, next) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            return next();
+        });
+
+        app.use(require('webpack-hot-middleware')(compiler, {
+            log: console.log
+        }));
+    }
 }

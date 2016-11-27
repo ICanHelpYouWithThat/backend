@@ -17,7 +17,9 @@
   "scripts": {
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
     "test": "./node_modules/.bin/mocha",
-    "init_db": "./scripts/init_db.sh"
+    "init_db": "./scripts/init_db.sh",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production webpack -p --progress --colors --bail --config ./webpack/webpack.config.js",
+    "deploy": "npm prune && npm install && ./node_modules/.bin/cross-env NODE_ENV=production node ./build/backend.js "
   },
   "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
   "dependencies": {
@@ -25,6 +27,7 @@
     "babel-register": "^6.18.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "cross-env": "^3.1.3",
     "es6-module-loader": "^0.17.11",
     "express": "^4.14.0",
     "helmet": "^3.1.0",
@@ -37,16 +40,15 @@
     "piping": "^1.0.0-rc.4",
     "sequelize": "^3.25.0",
     "traceur": "0.0.111",
-    "webpack": "^1.13.3",
-    "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.1",
-    "webpack-middleware-hmr": "^1.0.3"
-  },
-  "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.18.0",
-    "babel-register": "^6.18.0",
+    "webpack": "^1.13.3",
     "webpack-node-externals": "^1.5.4"
+  },
+  "devDependencies": {
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-middleware-hmr": "^1.0.3",
+    "webpack-hot-middleware": "^2.13.1"
   }
 }

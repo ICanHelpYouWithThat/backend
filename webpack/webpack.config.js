@@ -12,13 +12,21 @@ fs.readdirSync('node_modules')
         nodeModules[mod] = 'commonjs ' + mod;
     });
 
+console.log(process.env.NODE_ENV);
+const prod = process.env.NODE_ENV === 'production';
+
 module.exports = {
-    entry: {
-        app: [
-            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-            './src/bootstrap.js'
-        ]
-    },
+    entry: (
+        !prod ? {
+            app: [
+                'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+                './src/bootstrap.js'
+            ]} : {
+            app: [
+                './src/bootstrap.js'
+            ].concat(Object.keys(nodeExternals()))
+        }
+    ),
     target: 'node',
     output: {
         path: path.join(__dirname, '../build'),
@@ -33,18 +41,17 @@ module.exports = {
                 query: {
                     presets: ['es2015']
                 },
-                exclude: /node_modules/
+                exclude:
+                    (prod ? /node_modules/ : undefined)
+
             }
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
-            '__CLIENT__': true,
-            '__PRODUCTION__': false,
-            'process.env.NODE_ENV': JSON.stringify('development')
-        }),
+            '__PRODUCTION__': prod
+        })
     ]
 }

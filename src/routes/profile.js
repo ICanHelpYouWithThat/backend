@@ -61,11 +61,14 @@ export default () => {
                     message: err
                 })
             });
-        })
-        .get((req, res, next) => {
+        });
+
+    router.route("/:id").get((req, res, next) => {
             verifyToken(req.get('Authorization'),
-                function successCallBack()  {
-                    Profile.findById(req.body.profileid, {
+                function successCallBack(decoded)  {
+                    let id = Number.isInteger(Number.parseInt(req.params.id)) ? req.params.id : decoded.sub;
+
+                    Profile.findById(id, {
                         attributes: {exclude: ['password']}
                     }).then(profile => {
                         res.status(profile ? 200 : 404).send({
@@ -92,13 +95,13 @@ export default () => {
         .delete((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
-                    if (decoded.sub != req.body.profileid) {
+                    if (decoded.sub != req.params.id) {
                         res.status(401).send({
                             status: '0401',
                             message: 'Not authorized'
                         });
                     } else {
-                        Profile.findById(req.body.profileid)
+                        Profile.findById(req.params.id)
                             .then(user => {
                                 user.destroy({force: true});
                             });
@@ -120,13 +123,13 @@ export default () => {
         .put((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
-                    if (decoded.sub != req.body.id) {
+                    if (decoded.sub != req.params.id) {
                         res.status(401).send({
                             status: '0401',
                             message: 'Not authorized'
                         });
                     } else {
-                        Profile.findById(req.body.id)
+                        Profile.findById(req.params.id)
                             .then(user => {
                                 let keys = Object.keys(req.body);
                                 keys.forEach(key => {
@@ -184,7 +187,7 @@ export default () => {
                     error: err
                 })
             })
-        })
+        });
 
     // Or routes can b created this way.  Using .get .post .put .delete
     // right on router.
