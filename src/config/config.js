@@ -16,7 +16,10 @@ export {sequelizeInstance as sequelize, Sequelize as Sequelize};
 function getDatabaseInstance (host, username, password) {
     return new Sequelize('ichuwt', username, password, {
         host: host,
-        dialect: 'mysql'
+        dialect: 'mysql',
+        pool: {
+            min: 1
+        }
     });
 }
 

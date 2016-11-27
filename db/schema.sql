@@ -17,7 +17,8 @@ CREATE TABLE PROFILE (
     password VARCHAR(60),
     linked_acct VARCHAR(500),
     status TINYINT,
-    PRIMARY KEY(ID)
+    PRIMARY KEY(ID),
+    UNIQUE(email)
 );
 
 CREATE TABLE ACTIVITY (
