@@ -2,7 +2,7 @@
   "name": "ichywt-backend",
   "description": "Simple site which allows people who are logged in through Facebook to find tasks that help out an organization who needs a skill they can offer - location/time constraints are matching.",
   "version": "0.0.0",
-  "author": "Thiyag Krishna",
+  "author": "ICHYWT Contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,7 +17,6 @@
   "scripts": {
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
     "test": "./node_modules/.bin/mocha",
-    "init_db": "./scripts/init_db.sh",
     "build": "./node_modules/.bin/cross-env NODE_ENV=production webpack -p --progress --colors --bail --config ./webpack/webpack.config.js",
     "deploy": "npm prune && npm install && ./node_modules/.bin/cross-env NODE_ENV=production node ./build/backend.js "
   },
@@ -39,11 +38,9 @@
     "http": "0.0.0",
     "jsonwebtoken": "^7.1.9",
     "mocha": "^3.1.2",
-    "mysql": "^2.12.0",
     "node-uuid": "^1.4.7",
     "nodemon": "^1.11.0",
     "piping": "^1.0.0-rc.4",
-    "sequelize": "^3.25.0",
     "traceur": "0.0.111",
     "vitalsigns": "^0.4.3",
     "webpack": "^1.13.3",

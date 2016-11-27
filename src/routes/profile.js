@@ -46,21 +46,23 @@ export default () => {
      */
     router.route("")
         .post((req, res, next) => {
-            Profile.create({
-                name: req.body.name,
-                email: req.body.email,
-                password: bcrypt.hashSync(req.body.password, saltRounds)
-            }).then(profile => {
-                res.status(200).send({
-                    status: '0000',
-                    message: 'New profile created'
+            Profile.sync().then(function() {
+                return Profile.create({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: bcrypt.hashSync(req.body.password, saltRounds)
+                }).then(profile => {
+                    res.status(200).send({
+                        status: '0000',
+                        message: 'New profile created'
+                    })
+                }).catch((err) => {
+                    res.status(500).send({
+                        status: '0500',
+                        message: err
+                    })
                 })
-            }).catch((err) => {
-                res.status(500).send({
-                    status: '0500',
-                    message: err
-                })
-            });
+            })
         });
 
     router.route("/:id").get((req, res, next) => {
