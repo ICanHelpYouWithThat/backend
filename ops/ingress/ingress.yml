@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: production-ingress
+spec:
+  backend:
+    serviceName: backend
+    servicePort: 80
+  rules:
+  - host: stage.icanhelpyouwiththat.org
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80
+  - host: stageapi.icanhelpyouwiththat.org
+    http:
+      paths:
+      - backend:
+          serviceName: backend
+          servicePort: 80

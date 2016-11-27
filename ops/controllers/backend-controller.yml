@@ -19,6 +19,8 @@ spec:
       containers:
         - name: backend
           image: us.gcr.io/icanhelpyouwiththat-149304/backend:latest
+          command: ["/bin/bash","-c"]
+          args: ["./node_modules/.bin/cross-env NODE_ENV=production node ./build/backend.js"]
           env:
           - name: NODE_ENV
             value: production
