@@ -3,7 +3,7 @@ import express from 'express';
 import webpack from 'webpack';
 import cluster from 'cluster';
 import cors from 'express-cors';
-
+import log from './libs/log';
 import VitalSigns from 'vitalsigns';
 const vitals = new VitalSigns({
     "httpHealthy": 200,
@@ -54,6 +54,8 @@ if(cluster.isMaster) {
         ]
     }));
 
+    app.use(log.requestLogger);
+    app.use(log.errorLogger);
     let bodyParser = require('body-parser');
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
@@ -78,7 +80,9 @@ if(cluster.isMaster) {
         }
     });
 
-
+    app.get("/favicon.ico", function (req, res, next) {
+            res.status(200).send();
+    });
 
     app.use(require('./routes').default);
 
