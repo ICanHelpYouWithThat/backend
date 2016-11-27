@@ -51,7 +51,18 @@ if(cluster.isMaster) {
             "*.icanhelpyouwiththat.org",
             "icanhelpyouwiththat.org",
             "*"
+        ],
+        "headers": [
+            "Authorization",
+            "Origin",
+            "Accept",
+            "X-Requested-With",
+            "Content-Type",
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Header",
+            "Access-Control-Allow-Headers"
         ]
+
     }));
 
     app.use(log.requestLogger);
@@ -92,20 +103,8 @@ if(cluster.isMaster) {
         console.log('Process ' + process.pid + ' is listening to all incoming requests on port '+ port);
     });
 
-    if (process.env.NODE_ENV === 'production') {
-        app.use(function(req, res, next) {
-            res.setHeader('Access-Control-Allow-Origin', 'icanhelpyouwiththat.org');
-            res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-            res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-            return next();
-        });
-    } else {
+    if (process.env.NODE_ENV !== 'production') {
         let compiler = webpack(config);
-
-        app.use(function(req, res, next) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            return next();
-        });
 
         app.use(require('webpack-hot-middleware')(compiler, {
             log: console.log
