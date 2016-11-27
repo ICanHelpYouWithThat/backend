@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mongo-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: slow
+  labels:
+    name: mongo-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
