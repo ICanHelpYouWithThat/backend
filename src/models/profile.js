@@ -22,6 +22,7 @@ var Profile = sequelize.define('PROFILE', {
     },
     email: {
         type: Sequelize.STRING(150),
+        field: 'email',
         unique: true,
         allowNull: false,
         validate: {
@@ -45,35 +46,43 @@ var Profile = sequelize.define('PROFILE', {
     },
     type: {
         type: 'TINYINT',
+        field: 'profile_type',
         allowNull: true
     },
     mission: {
         type: Sequelize.STRING(500),
+        field: 'mission',
         allowNull: true
     },
     admin: {
         type: Sequelize.BOOLEAN,
+        field: 'admin',
         allowNull: false,
         defaultValue: false
     },
     likes: {
         type: Sequelize.INTEGER,
+        field: 'likes',
         allowNull: true
     },
     invites: {
         type: Sequelize.INTEGER,
+        field: 'invites',
         allowNull: true
     },
     password: {
         type: Sequelize.STRING(60),
+        field: 'password',
         allowNull: false
     },
     linkedAccount: {
         type: Sequelize.STRING(500),
+        field: 'linked_acct',
         allowNull: true
     },
     status: {
         type: "TINYINT",
+        field: 'status',
         allowNull: true
     }
 }, {
