@@ -78,6 +78,8 @@ var Profile = sequelize.define('PROFILE', {
     }
 }, {
 
+    freezeTableName: true,
+    timestamps: false,
     // These are class methods.
     classMethods: {
         createUsers: (arrayOfUserData) => {
@@ -109,6 +111,5 @@ if (fs.lstatSync('/tmp/pp/pp')) {
         })
     });
 }
-
 
 export default Profile;

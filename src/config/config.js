@@ -11,8 +11,6 @@ const sequelizeInstance = (
     )() : console.log("Unrecognized enviroment.")
 );
 
-
-
 export {sequelizeInstance as sequelize, Sequelize as Sequelize};
 
 function getDatabaseInstance (host, username, password) {
