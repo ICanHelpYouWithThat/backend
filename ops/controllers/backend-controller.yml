@@ -16,6 +16,10 @@ spec:
         name: backend
         version: v0.0.0
     spec:
+      volumes:
+        - name: "pp"
+          secret:
+            secretName: pp
       containers:
         - name: backend
           image: us.gcr.io/icanhelpyouwiththat-149304/backend:latest
@@ -27,3 +31,6 @@ spec:
           ports:
             - containerPort: 3000
               name: http
+          volumeMounts:
+            - mountPath: "/tmp/pp"
+              name: "pp"

@@ -7,7 +7,7 @@ const sequelizeInstance = (
     !env || env === 'development' ? (() => (
         getDatabaseInstance('localhost', 'root', '')
     ))() : env === "production" ? (() =>
-        getDatabaseInstance('icanhelpyouwiththat', 'root', 'medco123')
+        getDatabaseInstance('104.197.138.145', 'root', 'medco123')
     )() : console.log("Unrecognized enviroment.")
 );
 

@@ -7,12 +7,6 @@ spec:
     serviceName: backend
     servicePort: 80
   rules:
-  - host: stageapi.icanhelpyouwiththat.org
-    http:
-      paths:
-      - backend:
-          serviceName: backend
-          servicePort: 80
   - host: stage.icanhelpyouwiththat.org
     http:
       paths:

@@ -41,16 +41,16 @@ if(cluster.isMaster) {
     });
 } else {
     let app = express();
-
-    //helmet helps secure apps by setting appropriate headers
-    let helmet = require('helmet');
-    app.use(helmet());
-
+    app.use(function (req, res, next) {
+        console.log('API hit');
+        next();
+    })
     app.use(cors({
         "allowedOrigins": [
             "*.icanhelpyouwiththat.org:*",
             "*.icanhelpyouwiththat.org",
-            "icanhelpyouwiththat.org"
+            "icanhelpyouwiththat.org",
+            "*"
         ]
     }));
 
