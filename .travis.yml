@@ -9,6 +9,16 @@ addons:
       - g++-4.8
 before_install:
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
+  - gcloud version
+  - sudo gcloud --quiet components update kubectl
+  - GCLOUDDIR=$(which gcloud)
+  - echo $GCLOUD_KEY | base64 --decode > gcloud.json
+  - sudo gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.json
+  - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
+  - sudo gcloud docker -a
+  - docker build -t us.gcr.io/icanhelpyouwiththat-149304/backend:latest .
+  - sudo docker push us.gcr.io/icanhelpyouwiththat-149304/backend:latest > /dev/null
+  - sudo gcloud container clusters get-credentials stage --zone us-central1-c && kubectl delete pods -l name=backend
 script: "./node_modules/.bin/mocha"
 notifications:
   slack:
