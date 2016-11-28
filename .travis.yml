@@ -20,7 +20,7 @@ before_install:
   - sudo gcloud docker -a
   - docker build -t us.gcr.io/icanhelpyouwiththat-149304/backend:latest .
   - sudo docker push us.gcr.io/icanhelpyouwiththat-149304/backend:latest > /dev/null
-  - sudo gcloud config set core/project icanhelpyouwiththat-149304 && sudo gcloud container clusters get-credentials stage --zone us-central1-c && kubectl delete pods -l name=backend
+  - sudo gcloud config set core/project icanhelpyouwiththat-149304 && sudo gcloud container clusters get-credentials stage --zone us-central1-c && sudo kubectl delete pods -l name=backend
 script: "./node_modules/.bin/mocha"
 notifications:
   slack:
