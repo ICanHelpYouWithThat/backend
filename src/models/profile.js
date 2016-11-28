@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
  */
 const profileSchema = mongoose.Schema({
     name: {type: String, required: true, index: true},
-    email: {type: String, required: true, index: true},
+    email: {type: String, required: true, index: true, unique: true},
     karmaPoints: {type: String, index: true},
     mobilePhone: String,
     location: String,
