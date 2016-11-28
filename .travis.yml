@@ -3,6 +3,9 @@ node_js:
 - '7'
 services:
   - docker
+env:
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 addons: 
   apt:
     sources:
@@ -10,10 +13,12 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
   - gcloud version
-  - sudo gcloud --quiet components install kubectl
-  - sudo gcloud --quiet components update
+  - gcloud components update kubectl || true
+  - curl https://sdk.cloud.google.com | bash
+  - bash -l ./gcloud.sh version
+  - bash -l ./gcloud.sh components update kubectl
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
   - GCLOUDDIR=$(which gcloud)
   - echo $GCLOUD_KEY | base64 --decode > gcloud.json
   - sudo gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.json
