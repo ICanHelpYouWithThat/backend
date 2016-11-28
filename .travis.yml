@@ -11,7 +11,8 @@ env:
   - GCLOUD_PROJECT='icanhelpyouwiththat-149304'
   - PROJECT_ID="${GCLOUD_PROJECT}"
   - ZONE='us-central1-c'
-addons: 
+  - CLUSTER_ID='stage'
+addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -25,12 +26,15 @@ before_install:
   - bash -l ./gcloud.sh components update kubectl
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
   - GCLOUDDIR=$(which gcloud)
+  - gcloud --quiet config set project "${PROJECT_ID}"
+  - gcloud --quiet config set compute/zone "${ZONE}"
   - echo $GCLOUD_KEY | base64 --decode > gcloud.json
   - bash -l ./gcloud.sh auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.json
   - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
   - bash -l ./gcloud.sh docker -a
   - docker build -t us.gcr.io/icanhelpyouwiththat-149304/backend:latest .
   - docker push us.gcr.io/icanhelpyouwiththat-149304/backend:latest > /dev/null
+  - kubectl config use-context "${CLUSTER_ID}"
   - bash -l ./gcloud.sh config set core/project icanhelpyouwiththat-149304 && bash -l ./gcloud.sh container clusters get-credentials stage --zone us-central1-c
   - kubectl delete pods -l name=backend
 script: "./node_modules/.bin/mocha"
