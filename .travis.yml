@@ -34,7 +34,7 @@ before_deploy:
   - gcloud --quiet config set compute/zone "${ZONE}"
   - kubectl config use-context "${CLUSTER_ID}"
   - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
-  - bash -l ./gcloud.sh docker -a
+  - gcloud docker -a
   - docker build -t us.gcr.io/icanhelpyouwiththat-149304/backend:latest .
   - docker push us.gcr.io/icanhelpyouwiththat-149304/backend:latest > /dev/null
   - gcloud container clusters get-credentials stage --zone us-central1-c
