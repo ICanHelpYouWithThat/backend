@@ -18,7 +18,9 @@
     "start": "npm prune && npm install && NODE_ENV=development nodemon ./src/bootstrap.js",
     "test": "./node_modules/.bin/mocha",
     "build": "./node_modules/.bin/cross-env NODE_ENV=production webpack -p --progress --colors --bail --config ./webpack/webpack.config.js",
-    "deploy": "npm prune && npm install && ./node_modules/.bin/cross-env NODE_ENV=production node ./build/backend.js "
+    "deploy": "npm prune && npm install && ./node_modules/.bin/cross-env NODE_ENV=production node ./build/backend.js",
+    "kube:stage": "gcloud container clusters get-credentials stage --zone us-central1-c",
+    "mongo:stage": "npm run kube:stage && kubectl exec -it $(kubectl get pods -o name | grep mongo | sed 's/pod\\///') -c mongo mongo"
   },
   "homepage": "https://github.com/ICanHelpYouWithThat/backend#readme",
   "dependencies": {
