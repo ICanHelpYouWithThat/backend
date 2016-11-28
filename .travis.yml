@@ -24,8 +24,6 @@ before_install:
   - gcloud --quiet components install kubectl
   - kubectl version --client=true
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
-script: "./node_modules/.bin/mocha"
-after_install:
   - echo $GCLOUD_KEY | base64 --decode > ${PWD}/gcloud.json
   - export GOOGLE_APPLICATION_CREDENTIALS="${PWD}/gcloud.json"
   - export KUBECONFIG="${PWD}/.kube/config"
@@ -40,6 +38,7 @@ after_install:
   - gcloud container clusters get-credentials stage --zone us-central1-c
   - export KUBECONFIG="${PWD}/.kube/config"
   - kubectl delete pods -l name=backend
+script: "./node_modules/.bin/mocha"
 notifications:
   slack:
     secure: YTBdjS53PzDiza/8HjMmOit+Wfs61T9hgpetg6SkiP9/sgizyfXFl6Bp/J7f8pxgo5oZwTyXXbtv8+Itb1puzsnbM4bJZX/M6uCxy23d7Mjpiwowxy6frC4S6hs8EhDgm+TbWQx/RoHYriOLLV4GbfYWlL6CxPqB7wFdXVEH8HBLLWfUCzKKHq20gnYhT4KJX05xgtaH48qkz0O3uBXEeJX8AZe/c/Lb5pZRzXgGmn+VqjuwAe1cD8su9LLBOP1wdq5xvNcsXZ9PoEARTi6iZINQctAvYz9lfdymZAJ9NpZ3iopBHFP6GYPLHPvYTVQCLNpLaZAgEGBBnH9+8jway+tfZ2dViLNmAadiDMjtley6JbY/aJrNqhmfpDp9sx6BzaAtnC8GugSnOTJ99FHAx/0W8Ylj1Z80rZDrBRCA9apbqdQUec3FdU6IsptKsT1/8F0uedirwqvV87jQ63TXskbl2zLxKOoewB7jYbnJA0VH/oeu5DTbm+tmRzwLPgds0vMh32zox9OTCgGqR2C5h7OVqGUIUAmdz0tq+FhQ52EcQrPJ/DT2U/FgACKPP4z+jjvKNtCPxPYjjOf7EkQB3ZsAxDq7bY9UzfT+J2dEa91oRzXIOpIqsBZvJ9RGPbJxMKFHQcmo1kU/nolhTvhiOdsubxL3lbnHn0bo9E7QHXw=
