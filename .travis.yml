@@ -5,8 +5,12 @@ node_js:
 services:
   - docker
 env:
+  global:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
-
+  - PATH="${HOME}/google-cloud-sdk/bin:${PATH}"
+  - GCLOUD_PROJECT='icanhelpyouwiththat-149304'
+  - PROJECT_ID="${GCLOUD_PROJECT}"
+  - ZONE='us-central1-c'
 addons: 
   apt:
     sources:
@@ -16,7 +20,7 @@ addons:
 before_install:
   - gcloud version
   - gcloud components update kubectl || true
-  - curl https://sdk.cloud.google.com | bash
+  - if [ ! -d "${HOME}/google-cloud-sdk" ]; then curl https://sdk.cloud.google.com | bash; fi
   - bash -l ./gcloud.sh version
   - bash -l ./gcloud.sh components update kubectl
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
