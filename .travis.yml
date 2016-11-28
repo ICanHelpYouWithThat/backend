@@ -12,7 +12,8 @@ addons:
 before_install:
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
   - gcloud version
-  - sudo gcloud --quiet components update kubectl
+  - sudo gcloud --quiet components install kubectl
+  - sudo gcloud --quiet components update
   - GCLOUDDIR=$(which gcloud)
   - echo $GCLOUD_KEY | base64 --decode > gcloud.json
   - sudo gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.json
