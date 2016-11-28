@@ -36,6 +36,7 @@ before_install:
   - docker push us.gcr.io/icanhelpyouwiththat-149304/backend:latest > /dev/null
   - kubectl config use-context "${CLUSTER_ID}"
   - bash -l ./gcloud.sh config set core/project icanhelpyouwiththat-149304 && bash -l ./gcloud.sh container clusters get-credentials stage --zone us-central1-c
+  - export KUBECONFIG="${PWD}/.kube/config"
   - kubectl delete pods -l name=backend
 script: "./node_modules/.bin/mocha"
 notifications:
