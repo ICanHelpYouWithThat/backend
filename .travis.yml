@@ -12,6 +12,10 @@ env:
   - PROJECT_ID="${GCLOUD_PROJECT}"
   - ZONE='us-central1-c'
   - CLUSTER_ID='stage'
+branches:
+  only:
+  - master
+  - stage
 addons:
   apt:
     sources:
