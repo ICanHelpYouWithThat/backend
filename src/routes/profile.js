@@ -46,7 +46,6 @@ export default () => {
      */
     router.route("")
         .post((req, res, next) => {
-            Profile.sync().then(function() {
                 return Profile.create({
                     name: req.body.name,
                     email: req.body.email,
@@ -62,7 +61,6 @@ export default () => {
                         message: err
                     })
                 })
-            })
         });
 
     router.route("/:id").get((req, res, next) => {
@@ -70,8 +68,8 @@ export default () => {
                 function successCallBack(decoded)  {
                     let id = Number.isInteger(Number.parseInt(req.params.id)) ? req.params.id : decoded.sub;
 
-                    Profile.findById(id, {
-                        attributes: {exclude: ['password']}
+                    Profile.findOne({_id: id}, {
+                        password: 0
                     }).then(profile => {
                         res.status(profile ? 200 : 404).send({
                             status: profile ? '0000' : '0404',
@@ -131,13 +129,13 @@ export default () => {
                             message: 'Not authorized'
                         });
                     } else {
-                        Profile.findById(req.params.id)
+                        Profile.findOne({_id: id})
                             .then(user => {
                                 let keys = Object.keys(req.body);
                                 keys.forEach(key => {
                                     user[key] = req.body[key]
                                 });
-                                user.save({fields: keys})
+                                user.save()
                                     .then(() => {
                                         res.status(204).send({
                                             status: '0204',
@@ -165,11 +163,7 @@ export default () => {
      */
     router.route("/login")
         .post((req, res, next) => {
-            Profile.findOne({
-                where: {
-                    email: req.body.userid
-                }
-            }).then(user => {
+            Profile.findOne({email: req.body.userid}).then(user => {
                 if (!bcrypt.compareSync(req.body.password, user.password)) {
                     res.status(500).send({
                         status: '0500',

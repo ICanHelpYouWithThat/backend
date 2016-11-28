@@ -5,6 +5,16 @@ import cluster from 'cluster';
 import cors from 'express-cors';
 import log from './libs/log';
 import VitalSigns from 'vitalsigns';
+import fs from 'fs';
+
+fs.readdir('./src/scripts', (err, files) => {
+    files.forEach(file => {
+        require('./scripts/' + file);
+    });
+})
+
+require('./config/config');
+
 const vitals = new VitalSigns({
     "httpHealthy": 200,
     "httpUnhealthy": 503
@@ -41,10 +51,7 @@ if(cluster.isMaster) {
     });
 } else {
     let app = express();
-    app.use(function (req, res, next) {
-        console.log('API hit');
-        next();
-    })
+
     app.use(cors({
         "allowedOrigins": [
             "*.icanhelpyouwiththat.org:*",
