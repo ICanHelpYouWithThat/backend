@@ -5,11 +5,11 @@ metadata:
 spec:
   backend:
     serviceName: backend
-    servicePort: 80
+    servicePort: 443
   rules:
   - host: stage.icanhelpyouwiththat.org
     http:
       paths:
       - backend:
           serviceName: frontend
-          servicePort: 80
+          servicePort: 443
