@@ -87,6 +87,8 @@ if(cluster.isMaster) {
     vitals.unhealthyWhen("cpu", "usage").greaterThan(90);
     vitals.unhealthyWhen("tick", "maxMs").greaterThan(1000);
 
+    app.use("/.well-known", require("./libs/proxy").default("http://letsencrypt.default.svc.cluster.local"));
+
     app.get("/", function (req, res, next) {
         let report = vitals.getReport();
         delete report.mem;
