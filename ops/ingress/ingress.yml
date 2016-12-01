@@ -4,12 +4,18 @@ metadata:
   name: production-ingress
 spec:
   backend:
-    serviceName: backend
-    servicePort: 443
+    serviceName: frontend
+    servicePort: 80
   rules:
   - host: stage.icanhelpyouwiththat.org
     http:
       paths:
       - backend:
           serviceName: frontend
-          servicePort: 443
+          servicePort: 80
+  - host: stageapi.icanhelpyouwiththat.org
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80

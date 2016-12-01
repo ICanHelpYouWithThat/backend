@@ -4,14 +4,9 @@ metadata:
   name: backend
   labels:
     name: backend
-    env: production
-    role: proxy
 spec:
-  type: NodePort
   ports:
-      - port: 80
-        name: http
-        targetPort: 3000
-        protocol: TCP
+    - port: 3000
+      targetPort: 3000
   selector:
     name: backend

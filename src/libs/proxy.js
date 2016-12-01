@@ -1,6 +1,16 @@
 import http from 'http';
+import net from 'net';
+import url from 'url';
 
 export default (destination) => ((request, response) => {
+    // make a request to a tunneling proxy
+    var options = {
+        port: 80,
+        hostname: request.url,
+        method: request.method,
+        headers: request.headers,
+        path: destination
+    };
     // Create http server to destination
     const proxy = http.createClient(80, destination);
 

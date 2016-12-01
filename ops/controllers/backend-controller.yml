@@ -17,9 +17,9 @@ spec:
         version: v0.0.0
     spec:
       volumes:
-        - name: "pp"
+        - name: tls
           secret:
-            secretName: pp
+            secretName: tls
       containers:
         - name: backend
           image: us.gcr.io/icanhelpyouwiththat-149304/backend:latest
@@ -32,5 +32,6 @@ spec:
             - containerPort: 3000
               name: http
           volumeMounts:
-            - mountPath: "/tmp/pp"
-              name: "pp"
+            - name: tls
+              mountPath: /keys
+              readOnly: true
