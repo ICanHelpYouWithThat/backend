@@ -29,8 +29,8 @@ function generateWebToken(user) {
  * @param successCallBack
  * @param errorCallBack
  */
-function verifyToken(token, successCallBack, errorCallBack) {
-    jwt.verify(token, secret, {
+function verifyToken(authHeader, successCallBack, errorCallBack) {
+    jwt.verify(authHeader.split(' ')[1], secret, {
         issuer: 'https://icanhelpyouwiththat.org'
     }, (err, decoded) => {
         decoded ? successCallBack(decoded) : errorCallBack(err);
@@ -174,6 +174,7 @@ export default () => {
                 res.status(200).send({
                     status: '0000',
                     message: 'Authentication successful',
+                    profile: user,
                     token: generateWebToken(user)
                 })
             }).catch(err => {
