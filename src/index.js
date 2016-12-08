@@ -57,6 +57,7 @@ if(cluster.isMaster) {
             "*.icanhelpyouwiththat.org:*",
             "*.icanhelpyouwiththat.org",
             "icanhelpyouwiththat.org",
+            "http://localhost:4200",
             "*"
         ],
         "headers": [

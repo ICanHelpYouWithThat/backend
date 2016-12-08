@@ -17,7 +17,7 @@ const profileSchema = mongoose.Schema({
     mission: String,
     likes: {type: Number, default: 0},
     invites: {type: Number, default: 0},
-    password: {type: String, required: true},
+    password: {type: String, required: true, select: false},
     linkedAccounts: [String],
     status: Boolean,
     created: {type: Date, required: true},

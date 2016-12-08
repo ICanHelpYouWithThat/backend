@@ -14,10 +14,10 @@ const saltRounds = 6;
  * @param user
  * @returns {*}
  */
-function generateWebToken(user) {
+function generateWebToken(id) {
     return jwt.sign({
         iss: 'https://icanhelpyouwiththat.org',
-        sub: user.id
+        sub: id
     }, secret, {
         expiresIn: '24h'
     })
@@ -51,44 +51,28 @@ export default () => {
                     email: req.body.email,
                     password: bcrypt.hashSync(req.body.password, saltRounds)
                 }).then(profile => {
-                    res.status(200).send({
-                        status: '0000',
-                        message: 'New profile created'
-                    })
+                    res.sendStatus(200)
                 }).catch((err) => {
-                    res.status(500).send({
-                        status: '0500',
-                        message: err
-                    })
+                    res.sendStatus(500)
                 })
         });
 
     router.route("/:id").get((req, res, next) => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded)  {
-                    let id = Number.isInteger(Number.parseInt(req.params.id)) ? req.params.id : decoded.sub;
 
-                    Profile.findOne({_id: id}, {
+                    Profile.findOne({_id: req.params.id}, {
                         password: 0
                     }).then(profile => {
-                        res.status(profile ? 200 : 404).send({
-                            status: profile ? '0000' : '0404',
-                            message: profile ? 'Profile found' : 'Profile not found',
+                        res.status(200).send({
                             profile: profile
                         });
                     }).catch(() => {
-                        res.status(500).send({
-                            status: '0500',
-                            message: 'Unknown error occured'
-                        })
+                        res.sendStatus(500);
                     })
                 },
                 function errorCallBack(err) {
-                    res.status(401).send({
-                        status: '0401',
-                        message: 'Not Authorized',
-                        error: err
-                    })
+                    res.sendStatus(401);
                 }
             );
         })
@@ -96,27 +80,17 @@ export default () => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
                     if (decoded.sub != req.params.id) {
-                        res.status(401).send({
-                            status: '0401',
-                            message: 'Not authorized'
-                        });
+                        res.sendStatus(401);
                     } else {
                         Profile.findById(req.params.id)
                             .then(user => {
                                 user.destroy({force: true});
                             });
-                        res.status(204).send({
-                            status: '0204',
-                            message: 'Item deleted'
-                        })
+                        res.sendStatus(201);
                     }
                 },
                 function errorCallBack(err) {
-                    res.status(500).send({
-                        status: '0500',
-                        message: 'Unknown error',
-                        error: err
-                    })
+                    res.sendStatus(500);
                 }
             )
         })
@@ -124,12 +98,9 @@ export default () => {
             verifyToken(req.get('Authorization'),
                 function successCallBack(decoded) {
                     if (decoded.sub != req.params.id) {
-                        res.status(401).send({
-                            status: '0401',
-                            message: 'Not authorized'
-                        });
+                        res.sendStatus(401);
                     } else {
-                        Profile.findOne({_id: id})
+                        Profile.findOne({_id: req.params.id})
                             .then(user => {
                                 let keys = Object.keys(req.body);
                                 keys.forEach(key => {
@@ -137,17 +108,10 @@ export default () => {
                                 });
                                 user.save()
                                     .then(() => {
-                                        res.status(204).send({
-                                            status: '0204',
-                                            message: 'Profile updated'
-                                        })
+                                        res.sendStatus(204);
                                     })
                                     .catch(err => {
-                                        res.status(500).send({
-                                            status: '0500',
-                                            message: 'Something went wrong',
-                                            error: err
-                                        })
+                                        res.sendStatus(500)
                                     })
                             });
                     }
@@ -163,26 +127,17 @@ export default () => {
      */
     router.route("/login")
         .post((req, res, next) => {
-            Profile.findOne({email: req.body.userid}).then(user => {
+            Profile.findOne({email: req.body.userid}, '+password').then(user => {
                 if (!bcrypt.compareSync(req.body.password, user.password)) {
-                    res.status(500).send({
-                        status: '0500',
-                        message: 'Username and Password do not match'
-                    })
+                    res.sendStatus(500);
                 }
 
                 res.status(200).send({
-                    status: '0000',
-                    message: 'Authentication successful',
                     profile: user,
-                    token: generateWebToken(user)
+                    token: generateWebToken(user._id)
                 })
             }).catch(err => {
-                res.status(500).send({
-                    status: '0500',
-                    message: 'User not found',
-                    error: err
-                })
+                res.sendStatus(500)
             })
         });
 
